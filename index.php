@@ -42,3 +42,16 @@ function currentUrl(){
 function methodField(){
     return $_SERVER['REQUEST_METHOD'];
 }
+
+function displayError($displayError){
+    if($displayError){
+        ini_set('display_errors', 1);
+        ini_set('display_statup_errors', 1);
+        error_reporting(E_ALL);
+    }else{
+        ini_set('display_error', 0);
+        ini_set('display_statup_errors', 0);
+        error_reporting(0);
+    }
+}
+// displayError(DISPLAY_ERROR);
