@@ -55,3 +55,24 @@ function displayError($displayError){
     }
 }
 // displayError(DISPLAY_ERROR);
+
+global $flashMessage;
+if(isset($_SESSION['flash_message'])){
+    $flashMessage = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+}
+
+function flash($name, $value=null){
+    if($value == null){
+        global $flashMessage;
+        $message = isset($flashMessage[$name]) ? $flashMessage[$name] : '';
+        return $message;
+    }else{
+        $_SESSION['flash_message'][$name] = $value;
+    }
+}
+
+// echo flash("login_error","Login failed!"); 
+echo flash("login_error"); 
+// echo flash("cart_success","Product added successfully!"); 
+echo flash("cart_success");
