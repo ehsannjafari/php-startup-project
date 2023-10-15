@@ -38,3 +38,7 @@ function url($url){
 function currentUrl(){
     return currentDomain() . $_SERVER['REQUEST_URI'];
 }
+
+function methodField(){
+    return $_SERVER['REQUEST_METHOD'];
+}
