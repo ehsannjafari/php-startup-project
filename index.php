@@ -14,6 +14,52 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
 // Helpers
+function uri($reservedUrl, $class, $method, $requestMethod = 'GET'){
+    // Current Url Processing
+    $currentUrl = explode('?', currentUrl())[0];
+    $currentUrl = str_replace(CURRENT_DOMAIN, '', $currentUrl);
+    $currentUrl = trim($currentUrl,'/ ');
+    $currentUrlArray = explode('/',$currentUrl);
+    $currentUrlArray = array_filter($currentUrlArray);
+
+    // Reserved Url Processing
+    $reservedUrl = trim($reservedUrl, '/');
+    $reservedUrlArray = explode('/', $reservedUrl);
+    $reservedUrlArray = array_filter($reservedUrlArray);
+
+    // Url matching process 
+    // size checking : if both url had the same size it's ok
+    if(sizeof($currentUrlArray) != sizeof($reservedUrlArray) || methodField() != $requestMethod){
+        return false;
+    }
+
+    // what if the url contains parameters
+    // Reserved URL: admin/categories/edit/{id}
+    // Current URL: admin/categories/edit/2
+    $parameters = [];
+    for($key = 0; $key < sizeof($currentUrlArray); $key++){
+        if($reservedUrlArray[$key][0] == "{" && $reservedUrlArray[$key][strlen($reservedUrlArray[$key]) - 1] == "}"){
+            array_push($parameters, $currentUrlArray[$key]); // push the parameters to parameter array
+        }
+        // admin == admin
+        // categories == categories
+        elseif($currentUrlArray[$key] !== $reservedUrlArray[$key]){
+            return false;
+        }
+    }
+
+    if(methodField() == 'POST'){
+        $request = isset($_FILES) ? array_merge($_POST, $_FILES) : $_POST;
+        $parameters = array_merge([$request], $parameters);
+    }
+
+    $object = new $class;
+    call_user_func_array(array($object, $method), $parameters);
+    exit();
+}
+uri('/admin/categories','Category','Index');
+
+
 function protocole(){
     return stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? "https://" : "http://";
 }
@@ -73,6 +119,12 @@ function flash($name, $value=null){
 }
 
 // echo flash("login_error","Login failed!"); 
-echo flash("login_error"); 
+// echo flash("login_error"); 
 // echo flash("cart_success","Product added successfully!"); 
-echo flash("cart_success");
+// echo flash("cart_success");
+
+function dd($var){
+    echo "<pre>";
+    var_dump($var);
+    exit();
+}
