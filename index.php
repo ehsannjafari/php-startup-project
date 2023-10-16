@@ -1,7 +1,8 @@
 <?php
-
 # Session Start
 session_start();
+
+use Database\Database;
 
 # Config
 define('PROJECT_NAME', 'Hello-News');
@@ -12,6 +13,9 @@ define('ِDB_HOST', 'localhost');
 define('DB_NAME', 'hellonews');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
+
+// require_once 'Database/Database.php';
+// $db = new Database();
 
 // Helpers
 function uri($reservedUrl, $class, $method, $requestMethod = 'GET'){
@@ -57,7 +61,7 @@ function uri($reservedUrl, $class, $method, $requestMethod = 'GET'){
     call_user_func_array(array($object, $method), $parameters);
     exit();
 }
-uri('/admin/categories','Category','Index');
+// uri('/admin/categories','Category','Index');
 
 
 function protocole(){
