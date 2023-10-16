@@ -14,8 +14,10 @@ define('DB_NAME', 'hellonews');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
-// require_once 'Database/Database.php';
-// $db = new Database();
+require_once 'Database/Database.php';
+$db = new Database();
+// $db->insert("users",['username','email','password'],['ehsan','ehsan@gmail.com', '12345']);
+// $db->update('users', 2, ['username', 'email', 'password'], ['ehsan','ehsan@gmail.com','12345']);
 
 // Helpers
 function uri($reservedUrl, $class, $method, $requestMethod = 'GET'){
