@@ -2,6 +2,7 @@
 # Session Start
 session_start();
 
+use Database\CreateDB;
 use Database\Database;
 
 # Config
@@ -15,7 +16,11 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
 require_once 'Database/Database.php';
-$db = new Database();
+require_once 'Database/CreateDB.php';
+// $db = new Database();
+// $db = new CreateDB();
+// $db->run();
+
 // $db->insert("users",['username','email','password'],['ehsan','ehsan@gmail.com', '12345']);
 // $db->update('users', 2, ['username', 'email', 'password'], ['ehsan','ehsan@gmail.com','12345']);
 
